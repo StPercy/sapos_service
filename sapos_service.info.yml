@@ -1,7 +1,7 @@
 name: 'Sapos Service'
 type: module
 core_version_requirement: ^9 || ^10
-description: 'Sapos Service Module checks if a Sapos Service is available'
+description: 'Sapos Service Module. This Service-Checker-module checks if a Sapos Service is available. By Stefan Pertschi, 2023'
 package: 'Sapos Service'
 
 dependencies:
