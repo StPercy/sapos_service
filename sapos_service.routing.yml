@@ -1,0 +1,7 @@
+hello.content:
+  path: '/sapos'
+  defaults:
+    _controller: '\Drupal\sapos_service\Controller\SaposServiceController::content'
+    _title: 'Hi from Sapos Service module'
+  requirements:
+    _permission: 'access content'

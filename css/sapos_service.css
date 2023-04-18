@@ -1,0 +1,16 @@
+.status {
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-weight: bold;
+}
+
+.available {
+  background-color: #8BC34A;
+  color: white;
+}
+
+.not-available {
+  background-color: #F44336;
+  color: white;
+}

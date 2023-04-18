@@ -1,0 +1,6 @@
+sapos_service:
+  version: VERSION
+  css:
+    theme:
+      css/sapos_service.css: {}
+

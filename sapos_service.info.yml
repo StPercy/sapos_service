@@ -1,0 +1,11 @@
+name: 'Sapos Service'
+type: module
+core_version_requirement: ^9 || ^10
+description: 'Sapos Service Module checks if a Sapos Service is available'
+package: 'Sapos Service'
+
+dependencies:
+  - drupal:block
+
+libraries:
+  - sapos_service/sapos_service
