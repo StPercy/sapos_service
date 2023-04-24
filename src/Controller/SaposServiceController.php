@@ -14,7 +14,7 @@
  class SaposServiceController extends ControllerBase {
 
    public function content() {
-     $output = 'Hi from the Sapos Service Controller !!! 🧔🏻✨📡 <hr/> <table class="sapos-service-table" border="1"><thead><tr><th style="border: 1px solid;">Name</th><th style="border: 1px solid;">Status</th></tr></thead><tbody>';
+     $output = 'Sapos Service Controller 🎮📡⭐ <hr/> <table class="sapos-service-table" border="1"><thead><tr><th style="border: 1px solid;">Name</th><th style="border: 1px solid;">Status</th></tr></thead><tbody>';
      $service_data = Database::getConnection()->select('service_status', 's')
        ->fields('s', ['name', 'verfuegbar'])
        ->execute()
@@ -22,10 +22,10 @@
 
      foreach ($service_data as $data) {
        if ($data->verfuegbar) {
-         $verfuegbar = $this->t('Verfügbar 💚');
+         $verfuegbar = $this->t('j35!!! 4\/4114I313 🟩');
          $status_style = 'color: green;';
        } else {
-         $verfuegbar = $this->t('Nicht verfügbar 🛑');
+         $verfuegbar = $this->t('|\|07 4\/4114I313 🟥');
          $status_style = 'color: red;';
        }
        $output .= '<tr><td style="border: 1px solid;padding: 5px;">' . $data->name . '</td><td style="border: 1px solid;padding: 1px 5px;"><span style="' . $status_style . '">' . $verfuegbar . '</span></td></tr>';

@@ -26,13 +26,14 @@ class SaposServiceBlock extends BlockBase {
 
     foreach ($service_data as $data) {
       if ($data->verfuegbar) {
-        $verfuegbar = $this->t('Available 💚💚💚');
+        $verfuegbar = $this->t('j35!!! 4\/4114I313 🟩');
         $status_style = 'color: green;';
       } else {
-        $verfuegbar = $this->t('Not available 🛑');
+        $verfuegbar = $this->t('|\|07 4\/4114I313 🟥');
         $status_style = 'color: red;';
       }
-      $output .= '<tr><td style="border: 1px solid black; font-weight: bold;">' . $data->name . '</td><td style="border: 1px solid black;"><span style="' . $status_style . '">' . $verfuegbar . '</span></td></tr>';
+      $output .= '<tr><td style="border: 1px solid black; font-weight: bold;">' . $data->name .
+                  '</td><td style="border: 1px solid black;"><span style="' . $status_style . '">' . $verfuegbar . '</span></td></tr>';
     }
 
     $output .= '</tbody></table>';
