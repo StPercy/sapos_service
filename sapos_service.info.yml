@@ -9,3 +9,6 @@ dependencies:
 
 libraries:
   - sapos_service/sapos_service
+
+permissions:
+  access sapos content: 'Access Sapos content'
