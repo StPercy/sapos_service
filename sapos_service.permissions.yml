@@ -1,0 +1,8 @@
+access sapos service content:
+  title: 'Access Sapos Service content'
+  description: 'Grants access to Sapos Service content.'
+  restrict access: true
+  roles:
+    - authenticated
+    - administrator
+
