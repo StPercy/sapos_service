@@ -5,4 +5,5 @@ access sapos service content:
   roles:
     - authenticated
     - administrator
+    - anonymous
 

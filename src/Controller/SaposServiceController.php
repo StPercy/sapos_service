@@ -15,7 +15,7 @@
 
    public function content() {
      // Check if the user has the "access sapos content" permission.
-     if (!$this->currentUser()->hasPermission('access sapos content')) {
+     if (!$this->currentUser()->hasPermission('access sapos service content')) {
        // If the user doesn't have the permission, deny access and display an error message.
        throw new \Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException();
      }
