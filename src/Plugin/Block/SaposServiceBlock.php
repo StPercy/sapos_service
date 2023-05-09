@@ -27,96 +27,61 @@ class SaposServiceBlock extends BlockBase {
     // Check if the current user has permission to access sapos content.
     $account = \Drupal::currentUser();
     $has_permission = $account->hasPermission('access sapos service content');
+    $build['#attached']['library'][] = 'sapos_service/sapos_service_css';
 
     // If the current user has permission, build the block output.
     if ($has_permission) {
-      $output = '<table style="border-collapse: collapse; border: 1px solid #000;font-weight: bold;"><thead><tr><th>Name</th><th>Status</th></tr></thead><tbody>';
-      $service_data = Database::getConnection()->select('service_status', 's')
-        ->fields('s', ['name', 'verfuegbar'])
+      $database = Database::getConnection('default', 'monitoring');
+      $service_data = $database->select('service_status', 's')
+        ->fields('s', ['station', 'verfuegbar'])
         ->execute()
-        ->fetchAll();<?php
+        ->fetchAll();$database = Database::getConnection('default', 'monitoring');
+        $service_data = $database->select('service_status', 's')
+          ->fields('s', ['station', 'verfuegbar'])
+          ->execute()
+          ->fetchAll();
 
-        /**
-         * @file
-         * Install, update and uninstall functions for the sapos_service module.
-         */
+        // Initialize variables to store the values for each station
+        $station1 = '';
+        $station2 = '';
+        $station3 = '';
+        $station4 = '';
 
-        use Drupal\Core\Database\Database;
+        // Process the service data and store values for each station
+        foreach ($service_data as $index => $data) {
+          $station = $data->station;
+          $verfuegbar = $data->verfuegbar;
 
-        /**
-         * Implements hook_schema().
-         */
-        function sapos_service_schema() {
-          // Define the service_status table schema.
-          $schema['service_status'] = [
-            'description' => 'The Sapos Service Status table.',
-            'fields' => [
-              'id' => [
-                'description' => 'The primary identifier for a service.',
-                'type' => 'serial',
-                'size' => 'small',
-                'unsigned' => TRUE,
-                'not null' => TRUE,
-              ],
-              'station' => [
-                'description' => 'The name of the service.',
-                'type' => 'varchar',
-                'length' => 255,
-                'not null' => TRUE,
-              ],
-              'verfuegbar' => [
-                'description' => 'The availability of the service.',
-                'type' => 'boolean',
-                'pgsql_type' => 'boolean', // specify the data type for PostgreSQL
-                'not null' => TRUE,
-              ],
-              'timestamp' => [
-                'description' => 'The timestamp of the service status update.',
-                'type' => 'int',
-                'not null' => TRUE,
-                'default' => 0,
-              ],
-            ],
-            'primary key' => ['id'],
-          ];
-
-          return $schema;
-        }
-
-        /**
-         * Implements hook_install().
-         */
-        function sapos_service_install() {
-          // Insert some initial data into the service_status table.
-          $service_data = [    ['station' => 'Service A', 'verfuegbar' => 'TRUE', 'timestamp' => time()],
-            ['station' => 'Service B', 'verfuegbar' => 'FALSE', 'timestamp' => time()],
-            ['station' => 'Service C', 'verfuegbar' => 'TRUE', 'timestamp' => time()],
-            ['station' => 'Service D', 'verfuegbar' => 'FALSE', 'timestamp' => time()],
-          ];
-
-          $connection = \Drupal::database();
-          foreach ($service_data as $data) {
-            $connection->insert('service_status')
-              ->fields($data)
-              ->execute();
+          // Assign values to the appropriate variable based on the station
+          switch ($station) {
+            case 'R-HEPS_1707_Septentrio_PolaRx5':
+              $station1 = $verfuegbar;
+              break;
+            case 'R-HEPS_ELMS_Leica_GR25':
+              $station2 = $verfuegbar;
+              break;
+            case 'HEPS_0707_Leica_GR25_2G':
+              $station3 = $verfuegbar;
+              break;
+            case 'HEPS_ELM2_Septentrio_PolaRx5_2G':
+              $station4 = $verfuegbar;
+              break;
+            default:
+              break;
           }
         }
-
-
-
-      foreach ($service_data as $data) {
-        if ($data->verfuegbar) {
-          $verfuegbar = $this->t('j35!!! 4\/4114I313 🟩');
-          $status_style = 'color: green;';
+        if ($station1 || $station2) {
+          $sapos_rheps = 'sapos_active';
         } else {
-          $verfuegbar = $this->t('|\|07 4\/4114I313 🟥');
-          $status_style = 'color: red;';
+          $sapos_rheps = 'sapos_inactive';
         }
-        $output .= '<tr><td style="border: 1px solid;" >' . $data->name .
-                    '</td><td style="border: 1px solid;"><span style="' . $status_style . '">' . $verfuegbar . '</span></td></tr>';
-      }
+        if ($station3 || $station4) {
+          $sapos_heps = 'sapos_active';
+        } else {
+          $sapos_heps = 'sapos_inactive';
+        }
 
-      $output .= '</tbody></table>';
+      $output .= '<div id="sapos_status"><div class="' . $sapos_heps . '">HEPS</div><div class="' . $sapos_rheps . '">R-HEPS-SH</div></div>';
     } else {
       // If the current user doesn't have permission, show a message.
       $output = '<p>' . $this->t('You do not have permission to access Sapos content.') . '</p>';
@@ -135,7 +100,7 @@ class SaposServiceBlock extends BlockBase {
    */
   protected function blockAccess(AccountInterface $account) {
     // Check if the current user has permission to access sapos content.
-    $has_permission = $account->hasPermission('access sapos content');
+    $has_permission = $account->hasPermission('access sapos service content');
 
     // Return the access result.
     return AccessResult::allowedIf($has_permission);
