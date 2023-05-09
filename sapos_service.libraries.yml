@@ -1,5 +1,5 @@
 sapos_service:
-  version: VERSION
+  version: 1
   css:
     theme:
       css/sapos_service.css: {}

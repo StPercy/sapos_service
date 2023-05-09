@@ -34,7 +34,75 @@ class SaposServiceBlock extends BlockBase {
       $service_data = Database::getConnection()->select('service_status', 's')
         ->fields('s', ['name', 'verfuegbar'])
         ->execute()
-        ->fetchAll();
+        ->fetchAll();<?php
+
+        /**
+         * @file
+         * Install, update and uninstall functions for the sapos_service module.
+         */
+
+        use Drupal\Core\Database\Database;
+
+        /**
+         * Implements hook_schema().
+         */
+        function sapos_service_schema() {
+          // Define the service_status table schema.
+          $schema['service_status'] = [
+            'description' => 'The Sapos Service Status table.',
+            'fields' => [
+              'id' => [
+                'description' => 'The primary identifier for a service.',
+                'type' => 'serial',
+                'size' => 'small',
+                'unsigned' => TRUE,
+                'not null' => TRUE,
+              ],
+              'station' => [
+                'description' => 'The name of the service.',
+                'type' => 'varchar',
+                'length' => 255,
+                'not null' => TRUE,
+              ],
+              'verfuegbar' => [
+                'description' => 'The availability of the service.',
+                'type' => 'boolean',
+                'pgsql_type' => 'boolean', // specify the data type for PostgreSQL
+                'not null' => TRUE,
+              ],
+              'timestamp' => [
+                'description' => 'The timestamp of the service status update.',
+                'type' => 'int',
+                'not null' => TRUE,
+                'default' => 0,
+              ],
+            ],
+            'primary key' => ['id'],
+          ];
+
+          return $schema;
+        }
+
+        /**
+         * Implements hook_install().
+         */
+        function sapos_service_install() {
+          // Insert some initial data into the service_status table.
+          $service_data = [    ['station' => 'Service A', 'verfuegbar' => 'TRUE', 'timestamp' => time()],
+            ['station' => 'Service B', 'verfuegbar' => 'FALSE', 'timestamp' => time()],
+            ['station' => 'Service C', 'verfuegbar' => 'TRUE', 'timestamp' => time()],
+            ['station' => 'Service D', 'verfuegbar' => 'FALSE', 'timestamp' => time()],
+          ];
+
+          $connection = \Drupal::database();
+          foreach ($service_data as $data) {
+            $connection->insert('service_status')
+              ->fields($data)
+              ->execute();
+          }
+        }
+
+
 
       foreach ($service_data as $data) {
         if ($data->verfuegbar) {

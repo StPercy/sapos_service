@@ -22,7 +22,7 @@ function sapos_service_schema() {
         'unsigned' => TRUE,
         'not null' => TRUE,
       ],
-      'name' => [
+      'station' => [
         'description' => 'The name of the service.',
         'type' => 'varchar',
         'length' => 255,
@@ -52,10 +52,10 @@ function sapos_service_schema() {
  */
 function sapos_service_install() {
   // Insert some initial data into the service_status table.
-  $service_data = [    ['name' => 'Service A', 'verfuegbar' => 'true', 'timestamp' => time()],
-    ['name' => 'Service B', 'verfuegbar' => 'false', 'timestamp' => time()],
-    ['name' => 'Service C', 'verfuegbar' => 'true', 'timestamp' => time()],
-    ['name' => 'Service D', 'verfuegbar' => 'false', 'timestamp' => time()],
+  $service_data = [    ['station' => 'Service A', 'verfuegbar' => 'TRUE', 'timestamp' => time()],
+    ['station' => 'Service B', 'verfuegbar' => 'FALSE', 'timestamp' => time()],
+    ['station' => 'Service C', 'verfuegbar' => 'TRUE', 'timestamp' => time()],
+    ['station' => 'Service D', 'verfuegbar' => 'FALSE', 'timestamp' => time()],
   ];
 
   $connection = \Drupal::database();
