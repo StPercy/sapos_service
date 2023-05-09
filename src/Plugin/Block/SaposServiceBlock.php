@@ -26,7 +26,7 @@ class SaposServiceBlock extends BlockBase {
 
     // Check if the current user has permission to access sapos content.
     $account = \Drupal::currentUser();
-    $has_permission = $account->hasPermission('access sapos service content');
+    $has_permission = $account->hasPermission('access sapos content');
 
     // If the current user has permission, build the block output.
     if ($has_permission) {
@@ -58,6 +58,11 @@ class SaposServiceBlock extends BlockBase {
     return [
       '#type' => 'markup',
       '#markup' => Markup::create($output),
+      '#attached' => [
+        'library' => [
+          'sapos_service/sapos_service',
+        ],
+      ],
     ];
   }
 
